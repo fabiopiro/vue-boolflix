@@ -41,3 +41,22 @@ export default {
   // OCCHIO OCCHIO
 }
 </script>
+
+
+created: function () {
+        axios
+            .get(this.apiUrlMovie, {
+                params: {
+                    api_key: this.myKey,
+                    language: this.italian,
+                    query: this.querySerched,
+                }
+            })
+            .then (
+                (res) => {
+                    console.log(res);
+                }
+            )
+    }
+
+    'https://api.themoviedb.org/3/search/movie?api_key=8473eea95ee5c9fdf429845509201140&language=it-IT&query=ritorno'

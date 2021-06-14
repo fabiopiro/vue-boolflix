@@ -1,15 +1,19 @@
 <template>
   <div id="app">
 
+    <FilmContainer />
+
   </div>
 </template>
 
 <script>
 
+import FilmContainer from './components/FilmContainer.vue';
+
 export default {
   name: 'App',
   components: {
-    // componente
+    FilmContainer,
   }
 }
 </script>
