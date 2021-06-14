@@ -1,0 +1,43 @@
+// path immagine
+// https://image.tmdb.org/t/p
+// /w342
+// /sL0Ay3GQZRup2xOPkL63qujgzgh.jpg
+// path immagine
+
+// font awesome stelle
+// stella piena
+// <i class="fas fa-star"></i>
+// stella vuota
+// <i class="far fa-star"></i>
+// font awesome stelle
+
+
+<script>
+// OCCHIO OCCHIO
+import axios from 'axios';
+// OCCHIO OCCHIO
+
+export default {
+  name: '',
+
+  // OCCHIO OCCHIO
+  created: function () {
+    axios
+      .get ('https://api.themoviedb.org/3/search/movie', {
+        params: {
+          // salva in un data la tua api_key!!!
+          api_key: '8473eea95ee5c9fdf429845509201140',
+          language: 'it-IT',
+          query: '',
+
+        }
+      })
+      .then (
+        (res) => {
+          console.log(res);
+        }
+      )
+  }
+  // OCCHIO OCCHIO
+}
+</script>
