@@ -1,7 +1,12 @@
 <template>
     <nav>
-        <input type="text">
-        <span>
+        <input 
+        type="text"
+        placeholder="Cerca un film..."
+        v-model="searchedText"
+        >
+        <span
+        @click="$emit('performSearch', searchedText)">
             bottone
         </span>
     </nav>
@@ -9,7 +14,12 @@
 
 <script>
 export default {
-    name: 'Nav'
+    name: 'Nav',
+    data: function () {
+        return {
+            searchedText: '',
+        }
+    },
 }
 </script>
 

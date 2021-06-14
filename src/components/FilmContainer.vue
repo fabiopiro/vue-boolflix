@@ -1,6 +1,8 @@
 <template>
   <div>
-      <Nav />
+      <Nav 
+      @performSearch="searchMovie"
+      />
 
       <section class="container">
         <Film 
@@ -35,24 +37,45 @@ export default {
             apiUrl: 'https://api.themoviedb.org/3/search/movie',
             myKey: '8473eea95ee5c9fdf429845509201140',
             queryProva: 'amore',
+            query: '',
         }
     },
-    created: function () {
-        axios
+    methods: {
+        searchMovie: function (text) {
+            this.query = text;
+            console.log(text);
+            console.log(this.query);
+
+            axios
             .get(this.apiUrl, {
                 params: {
                     api_key: this.myKey,
-                    query: this.queryProva,
+                    query: this.query,
                 }
             })
             .then (
                 (response) => {
                     // console.log(response);
                     this.movies = response.data.results;
-                    console.log(this.movies);
+                    console.log(this.movies); 
                 }
             )
-    }
+        }
+    },
+     computed: {
+         filteredMovies: function () {
+             const newArray = this.movies.filter(
+                 (element) => {
+                     return element.original_title
+                         .toLowerCase()
+                         .includes(
+                             this.query.toLowerCase()
+                         )
+                 }
+             )
+             return newArray
+         }
+     },
 }
 </script>
 
