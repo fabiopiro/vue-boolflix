@@ -31,6 +31,12 @@
             >
                 <i class="fas fa-star"></i>
             </p>
+            <p
+            v-for="index in (5 - item.vote_average)"
+            :key="index"
+            >
+                <i class="far fa-star"></i>
+            </p>
 
             <p>{{item.vote_average}}</p>
         </div>
