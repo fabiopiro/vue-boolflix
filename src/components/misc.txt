@@ -11,52 +11,53 @@
 // <i class="far fa-star"></i>
 // font awesome stelle
 
+https://image.tmdb.org/t/p/w342/sL0Ay3GQZRup2xOPkL63qujgzgh.jpg
 
 <script>
-// OCCHIO OCCHIO
+import Nav from './Nav.vue'
+import Film from './Film.vue'
+
+// axios
 import axios from 'axios';
-// OCCHIO OCCHIO
 
 export default {
-  name: '',
 
-  // OCCHIO OCCHIO
-  created: function () {
-    axios
-      .get ('https://api.themoviedb.org/3/search/movie', {
-        params: {
-          // salva in un data la tua api_key!!!
-          api_key: '8473eea95ee5c9fdf429845509201140',
-          language: 'it-IT',
-          query: '',
+    name: 'FilmContainer',
+    components: {
+        Nav,
+        Film,
+    },
 
+    data: function () {
+        return {
+
+            movies:[],
+
+            // api
+            apiUrlMovie: 'https://api.themoviedb.org/3/search/movie',
+            apiUrlSerie: 'https://api.themoviedb.org/3/search/tv',
+            myKey: '8473eea95ee5c9fdf429845509201140',
+            query: '',
         }
-      })
-      .then (
-        (res) => {
-          console.log(res);
-        }
-      )
-  }
-  // OCCHIO OCCHIO
-}
-</script>
+    },
+    methods: {
+        searchMovie: function (text) {
+            this.query = text;
 
-
-created: function () {
-        axios
+            axios
             .get(this.apiUrlMovie, {
                 params: {
                     api_key: this.myKey,
-                    language: this.italian,
-                    query: this.querySerched,
+                    query: this.query,
                 }
             })
             .then (
-                (res) => {
-                    console.log(res);
+                (response) => {
+                    // console.log(response);
+                    this.movies = response.data.results; 
                 }
             )
-    }
-
-    'https://api.themoviedb.org/3/search/movie?api_key=8473eea95ee5c9fdf429845509201140&language=it-IT&query=ritorno'
+        }
+    },
+}
+</script>

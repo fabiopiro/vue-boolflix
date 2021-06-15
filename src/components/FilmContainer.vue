@@ -8,6 +8,7 @@
         <Film 
         v-for="movie in movies"
         :key="movie.id"
+
         :item="movie"
         /> 
       </section>
@@ -28,54 +29,54 @@ export default {
         Nav,
         Film,
     },
+
     data: function () {
         return {
 
             movies:[],
 
             // api
-            apiUrl: 'https://api.themoviedb.org/3/search/movie',
+            apiUrlMovie: 'https://api.themoviedb.org/3/search/movie',
+            apiUrlSerie: 'https://api.themoviedb.org/3/search/tv',
             myKey: '8473eea95ee5c9fdf429845509201140',
-            queryProva: 'amore',
             query: '',
         }
     },
     methods: {
         searchMovie: function (text) {
             this.query = text;
-            console.log(text);
-            console.log(this.query);
 
-            axios
-            .get(this.apiUrl, {
-                params: {
-                    api_key: this.myKey,
-                    query: this.query,
-                }
-            })
-            .then (
-                (response) => {
-                    // console.log(response);
-                    this.movies = response.data.results;
-                    console.log(this.movies); 
-                }
+            axios.all(
+                [
+                axios.get(this.apiUrlMovie, {
+                    params: {
+                        api_key: this.myKey,
+                        query: this.query,
+                    }
+                }),
+                axios.get(this.apiUrlSerie, {
+                    params: {
+                        api_key: this.myKey,
+                        query: this.query,
+                    }
+                })
+                ]
             )
+            .then (
+                axios.spread((...response) => {
+                
+                const resone = response[0].data.results
+                const restwo = response[1].data.results
+
+                this.movies = resone.concat(restwo)
+
+                }
+            ))
+            // .catch(function (error) {
+            //     this.movies.splice(error)
+            // })
         }
     },
-     computed: {
-         filteredMovies: function () {
-             const newArray = this.movies.filter(
-                 (element) => {
-                     return element.original_title
-                         .toLowerCase()
-                         .includes(
-                             this.query.toLowerCase()
-                         )
-                 }
-             )
-             return newArray
-         }
-     },
 }
 </script>
 
