@@ -9,36 +9,31 @@
 
         <div class="film-text">
             <p>Titolo: {{item.title}}{{item.name}}</p>
-
             <p
             v-if="item.title !== item.original_title"
             >
             Titolo originale: {{item.original_title}}</p>
 
-            <p
-            v-if="item.original_language == 'it'"
-            >Lingua: <img class="flag" src="../assets/img/it.png" alt=""></p>
-            <p
-            v-else-if="item.original_language == 'en'"
-            >Lingua: <img class="flag" src="../assets/img/en.png" alt=""></p>
-            <p
-            v-else
-            >Lingua: {{item.original_language}}</p>
+            <img 
+                class="flag-image"
+                v-if="availableFlags.includes(item.original_language)"
+                :src="require(`../assets/img/flags/${item.original_language}.png`)" 
+                alt=""
+                >
+            <p v-else>Lingua: {{item.original_language}}</p>
 
-            <p
-            v-for="index in item.vote_average"
-            :key="index"
-            >
-                <i class="fas fa-star"></i>
-            </p>
-            <p
-            v-for="index in (5 - item.vote_average)"
-            :key="index"
-            >
-                <i class="far fa-star"></i>
-            </p>
+            <!-- star rating -->
+            <div class="rating">
+                <i class="fa-star"
+                v-for="index in 5"
+                :key="index"
+                :class="(index <= item.vote_average) ? 'fas' : 'far'"
+                ></i>
+            </div>
+            <div class="overview">
+                <p>{{item.overview}}</p>
+            </div>
 
-            <p>{{item.vote_average}}</p>
         </div>
     </div>
 </template>
@@ -47,12 +42,16 @@
 export default {
     name: 'Film',
     props: ['item'],
+    data: function () {
+        return {
+            availableFlags: ['it' , 'en'],
+        }
+    },
 
     created: function () {
         const voteRounded = Math.round((this.item.vote_average /2));
-        // const emptyStars = 5 - voteRounded;
-        console.log(voteRounded);
         this.item.vote_average = voteRounded
+
     },
 }
 </script>
@@ -66,27 +65,56 @@ export default {
         width: 342px;
 
         margin: 15px;
-        background-color: purple;
-
+        background-color: $bg-color-two;
         position: relative;
 
+        transition: 0.5s;
+
+        border-radius: 20px;
+        overflow: hidden;
+
+        &:hover {
+            .film-text {
+                visibility: visible;
+                transition: 0.5s;
+            }
+            .film-img {
+                opacity: 0.5;
+            }
+        }
+
         .film-img {
+
             width: 100%;
             height: 100%;
+
+            transition: 0.5s;
         }
 
 
         .film-text {
-            height: 100%;
+            
+            text-align: center;
             width: 100%;
+            height: 100%;
+            padding: 30px;
+
             position: absolute;
             top: 0;
             left: 0;
 
-            .flag {
+            // visibility: hidden;
+
+            .flag-image {
                 width: 30px;
                 height: 20px;
             }
+        }
+
+        .overview {
+            border-top: 2px solid red;
+            margin-top: 30px;
+            padding: 15px;
         }
     }
 

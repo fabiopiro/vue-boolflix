@@ -35,15 +35,19 @@ export default {
 
             movies:[],
 
-            // api
+            // api movie
             apiUrlMovie: 'https://api.themoviedb.org/3/search/movie',
+            // api serie
             apiUrlSerie: 'https://api.themoviedb.org/3/search/tv',
+            // api my key - themoviedb.org
             myKey: '8473eea95ee5c9fdf429845509201140',
+            // film/serie to search - required
             query: '',
         }
     },
     methods: {
         searchMovie: function (text) {
+
             this.query = text;
 
             axios.all(
@@ -72,9 +76,7 @@ export default {
 
                 }
             ))
-            // .catch(function (error) {
-            //     this.movies.splice(error)
-            // })
+
         }
     },
 }
@@ -85,7 +87,6 @@ export default {
     .container {
         display: flex;
         flex-wrap: wrap;
-        background-color: pink;
     }
 
 </style>
