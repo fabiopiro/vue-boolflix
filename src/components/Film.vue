@@ -117,7 +117,7 @@ export default {
             top: 0;
             left: 0;
 
-            // visibility: hidden;
+            visibility: hidden;
 
             .film-title {
                 color: red;

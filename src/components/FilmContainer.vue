@@ -3,8 +3,16 @@
       <Nav 
       @performSearch="searchMovie"
       />
-
       <section class="container">
+        <h1
+        v-if="this.movies.length == 0 && this.query.length == 0">
+        Cerca un film o una serie...
+        </h1>
+        <h1
+        v-else-if="this.query.length > 0 && this.movies.length == 0"
+        >
+        Non hai trovato nulla...riprova
+        </h1>
         <Film 
         v-for="movie in movies"
         :key="movie.id"
@@ -48,6 +56,7 @@ export default {
         searchMovie: function (text) {
 
             this.query = text;
+            console.log(this.query);
 
             axios.all(
                 [
@@ -87,5 +96,15 @@ export default {
         display: flex;
         flex-wrap: wrap;
     }
+
+    h1 {
+        font-size: 50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% , -50%);
+    }
+
+
 
 </style>
