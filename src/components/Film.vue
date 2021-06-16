@@ -7,20 +7,25 @@
         class="film-img"
         :src="'https://image.tmdb.org/t/p/w342/'+ item.poster_path" alt="">
 
-        <div class="film-text">
-            <p>Titolo: {{item.title}}{{item.name}}</p>
+        <div class="film-info">
+            <p class="film-title">{{item.title}}{{item.name}}</p>
             <p
             v-if="item.title !== item.original_title"
             >
-            Titolo originale: {{item.original_title}}</p>
-
-            <img 
-                class="flag-image"
-                v-if="availableFlags.includes(item.original_language)"
-                :src="require(`../assets/img/flags/${item.original_language}.png`)" 
-                alt=""
-                >
-            <p v-else>Lingua: {{item.original_language}}</p>
+            Original Title: {{item.original_title}}</p>
+           
+            <p
+            class="film-language"
+            v-if="availableFlags.includes(item.original_language)"
+            > Language:
+                <img 
+                    class="flag-image"
+                    v-if="availableFlags.includes(item.original_language)"
+                    :src="require(`../assets/img/flags/${item.original_language}.png`)" 
+                    alt=""
+                    >
+            </p>
+            <p v-else>Language: {{item.original_language}}</p>
 
             <!-- star rating -->
             <div class="rating">
@@ -61,6 +66,7 @@ export default {
 @import '../style/variables.scss';
 
     .film {
+
         height: 500px;
         width: 342px;
 
@@ -71,15 +77,19 @@ export default {
         transition: 0.5s;
 
         border-radius: 20px;
+
         overflow: hidden;
 
         &:hover {
-            .film-text {
+
+            transform: scale(1.05);
+
+            .film-info {
                 visibility: visible;
                 transition: 0.5s;
             }
             .film-img {
-                opacity: 0.5;
+                opacity: 0.3;
             }
         }
 
@@ -92,7 +102,11 @@ export default {
         }
 
 
-        .film-text {
+        .film-info {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             
             text-align: center;
             width: 100%;
@@ -105,16 +119,33 @@ export default {
 
             // visibility: hidden;
 
-            .flag-image {
-                width: 30px;
-                height: 20px;
+            .film-title {
+                color: red;
+                font-size: 30px;
+                font-weight: 700;
             }
+
+            .film-language {
+
+                display: flex;
+                justify-content: center;
+
+                .flag-image {
+                    margin-left: 5px;
+                    width: 30px;
+                    height: 20px;
+                }
+            }
+
         }
 
         .overview {
+            height: 50%;
             border-top: 2px solid red;
             margin-top: 30px;
             padding: 15px;
+
+            overflow: auto;
         }
     }
 

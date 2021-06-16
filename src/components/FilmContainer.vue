@@ -8,9 +8,8 @@
         <Film 
         v-for="movie in movies"
         :key="movie.id"
-
         :item="movie"
-        /> 
+        />
       </section>
   </div>
 </template>
