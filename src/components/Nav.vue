@@ -1,13 +1,17 @@
 <template>
     <nav>
+        <!-- logo -->
         <div class="nav-logo">
             <img src="../assets/img/fabioflix-logo.png" alt="">
         </div>
+        <!-- /logo -->
+        <!-- search -->
         <div class="nav-search">
             <input 
             type="text"
             placeholder="Cerca un film..."
             v-model="searchedText"
+            @keydown.enter="$emit('performSearch', searchedText)"
             >
             <span
             class="btn"
@@ -15,6 +19,7 @@
                 cerca
             </span>
         </div>
+        <!-- /search -->
     </nav>
 </template>
 

@@ -1,30 +1,31 @@
 <template>
-    <div 
-    class="film"
-    v-if="item.poster_path != null"
-    >
-        <!-- template literal
+    <div class="film">
+        <!-- poster -->
         <img
+        class="film-img"
         v-if="item.poster_path != null"
         :src="`https://image.tmdb.org/t/p/w342/${item.poster_path}`"
         alt="item_title ? item_title : item_name">
         <img
-        v-else
-        :src="immagine placeholder"
-        alt="`copertina ${item_title ? item.title : item_name} `"
-
-        -->
-        <img 
         class="film-img"
-        :src="'https://image.tmdb.org/t/p/w342/'+ item.poster_path" alt="">
-
+        v-else
+        src="../assets/img/placeholder.png"
+        alt="`copertina ${item_title ? item.title : item_name} `"/>
+        <!-- /poster -->
+        <!-- info -->
         <div class="film-info">
-            <p class="film-title">{{item.title}}{{item.name}}</p>
+            <!-- title & original title -->
+            <p class="film-title">
+                {{item.title ? item.title : item.name}}
+            </p>
             <p
-            v-if="item.title !== item.original_title"
-            >
-            Original Title: {{item.original_title}}</p>
-           
+            v-if="item.title != item.original_title
+            || item.name != item.original_name"
+            > Original Title - 
+            {{item.original_title ? item.original_title : item.original_name}}
+            </p>
+           <!-- /title & original title -->
+           <!-- language -->
             <p
             class="film-language"
             v-if="availableFlags.includes(item.original_language)"
@@ -37,7 +38,7 @@
                     >
             </p>
             <p v-else>Language: {{item.original_language}}</p>
-
+            <!-- /language -->
             <!-- star rating -->
             <div class="rating">
                 <i class="fa-star"
@@ -46,11 +47,14 @@
                 :class="(index <= item.vote_average) ? 'fas' : 'far'"
                 ></i>
             </div>
+            <!-- /star rating -->
+            <!-- overview -->
             <div class="overview">
                 <p>{{item.overview}}</p>
             </div>
-
+            <!-- /overview -->
         </div>
+        <!-- /info -->
     </div>
 </template>
 

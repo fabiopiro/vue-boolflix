@@ -13,7 +13,7 @@
         <h1
         v-else-if="this.query.length > 0 && this.movies.length == 0"
         >
-        Non hai trovato nulla...riprova
+        Non hai trovato nulla...riprova!
         </h1>
         <!-- /welcome & error message -->
         <!-- film section -->
@@ -64,33 +64,37 @@ export default {
             this.query = text;
             // console.log(this.query);
 
-            axios.all(
-                [
-                axios.get(this.apiUrlMovie, {
-                    params: {
-                        api_key: this.myKey,
-                        query: this.query,
+            if (this.query.trim() == '') {
+                this.movies = [];
+            } else if (this.query.trim() != '') {
+
+                axios.all(
+                    [
+                    axios.get(this.apiUrlMovie, {
+                        params: {
+                            api_key: this.myKey,
+                            query: this.query,
+                        }
+                    }),
+                    axios.get(this.apiUrlSerie, {
+                        params: {
+                            api_key: this.myKey,
+                            query: this.query,
+                        }
+                    })
+                    ]
+                )
+                .then (
+                    axios.spread((...response) => {
+                    
+                    const resone = response[0].data.results
+                    const restwo = response[1].data.results
+    
+                    this.movies = resone.concat(restwo)
+    
                     }
-                }),
-                axios.get(this.apiUrlSerie, {
-                    params: {
-                        api_key: this.myKey,
-                        query: this.query,
-                    }
-                })
-                ]
-            )
-            .then (
-                axios.spread((...response) => {
-                
-                const resone = response[0].data.results
-                const restwo = response[1].data.results
-
-                this.movies = resone.concat(restwo)
-
-                }
-            ))
-
+                ))
+            }
         }
     },
 }
