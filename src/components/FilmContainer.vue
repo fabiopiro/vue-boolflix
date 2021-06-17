@@ -1,9 +1,11 @@
 <template>
-  <div>
-      <Nav 
-      @performSearch="searchMovie"
-      />
-      <section class="container">
+    <div>
+        <!-- nav - component -->
+        <Nav 
+        @performSearch="searchMovie"
+        />
+        <!-- /nav  component-->
+        <!-- welcome & error message -->
         <h1
         v-if="this.movies.length == 0 && this.query.length == 0">
         Cerca un film o una serie...
@@ -13,13 +15,17 @@
         >
         Non hai trovato nulla...riprova
         </h1>
-        <Film 
-        v-for="movie in movies"
-        :key="movie.id"
-        :item="movie"
-        />
-      </section>
-  </div>
+        <!-- /welcome & error message -->
+        <!-- film section -->
+        <section class="container">
+            <Film 
+            v-for="movie in movies"
+            :key="movie.id"
+            :item="movie"
+            />
+        </section>
+        <!-- /film section -->
+    </div>
 </template>
 
 <script>
@@ -56,7 +62,7 @@ export default {
         searchMovie: function (text) {
 
             this.query = text;
-            console.log(this.query);
+            // console.log(this.query);
 
             axios.all(
                 [
@@ -92,19 +98,26 @@ export default {
 
 <style lang="scss" scoped>
 
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
     h1 {
         font-size: 50px;
         position: absolute;
         top: 50%;
-        left: 50%;
-        transform: translate(-50% , -50%);
+        left: 30%;
+        // transform: translate(-50% , -50%);
+        animation-name: bigAndSmall;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+
+        @keyframes bigAndSmall {
+            0%{transform: scale(1.0);}
+            50% {transform: scale(1.5);}
+            100% {transform: scale(1.0);}
+        }
     }
 
-
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
 </style>

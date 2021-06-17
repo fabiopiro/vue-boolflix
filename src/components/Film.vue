@@ -3,6 +3,17 @@
     class="film"
     v-if="item.poster_path != null"
     >
+        <!-- template literal
+        <img
+        v-if="item.poster_path != null"
+        :src="`https://image.tmdb.org/t/p/w342/${item.poster_path}`"
+        alt="item_title ? item_title : item_name">
+        <img
+        v-else
+        :src="immagine placeholder"
+        alt="`copertina ${item_title ? item.title : item_name} `"
+
+        -->
         <img 
         class="film-img"
         :src="'https://image.tmdb.org/t/p/w342/'+ item.poster_path" alt="">
@@ -54,7 +65,7 @@ export default {
     },
 
     created: function () {
-        const voteRounded = Math.round((this.item.vote_average /2));
+        const voteRounded = Math.ceil((this.item.vote_average /2));
         this.item.vote_average = voteRounded
 
     },
@@ -86,7 +97,6 @@ export default {
 
             .film-info {
                 visibility: visible;
-                transition: 0.5s;
             }
             .film-img {
                 opacity: 0.3;
